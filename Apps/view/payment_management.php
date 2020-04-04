@@ -330,7 +330,7 @@ $totalfull=$totalwithdeliverycharge-$deliverycharge+$discount;
 <th style="height:40px">
   <?php if( $noau==0) { ?>
           <a href="../view/invoice.php?payment_id=<?php echo $row ['payment_id']; ?>">
-                <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="View Invoice">Send Invoice</button>
+                <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="View Invoice">View Invoice</button>
               </a>
         <?php }else{?>
 
@@ -363,118 +363,6 @@ $totalfull=$totalwithdeliverycharge-$deliverycharge+$discount;
 </div>
 
 
-<div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-       <div>
-
-
-     </div>
-     <div class="alert alert-info"><h4 class="card-title" align="center">Payment For Packages</h4></div>
-  
-                <div style="text-align: center">
-                        <?php
-                        if(isset($_GET['msg'])){
-                            $msg= base64_decode($_GET['msg']);
-                                    if($_GET['id']==1){
-                                        $style="alert-success";
-                                    }else{
-                                        $style="alert-danger";
-                                    }
-                                    echo "<span class='".$style."'>".$msg."</span>";
-                        }
-                        ?>
-                        
-                    </div>
-     <div class="table-responsive m-t-40">
-      <table id="example23" class="table table-hover" cellspacing="0" width="100%"">
-        <thead class="table-secondary">
-          <tr>
-            <th style="height:40px">Order ID/Payment ID &nbsp;</th>
-            <th style="height:40px">Payment Date</th>
-            <th style="height:40px">Total Paid</th>
-            <th style="height:40px">Payment Status</th>
-            <th style="height:40px">Transaction ID</th>
-            <th style="height:40px"></th>
-          </tr>
-        </thead>
-        <tfoot class="table-active">
-          <tr>
-         <th style="height:40px">Order ID/Payment ID &nbsp;</th>
-            <th style="height:40px">Payment Date</th>
-            <th style="height:40px">Total Paid</th>
-            <th style="height:40px">Payment Status</th>
-            <th style="height:40px">Transaction ID</th>
-            <th style="height:40px"></th>
-          </tr>
-        </tfoot>
-        <tbody>
-          <?php while($row=$resultp->fetch(PDO::FETCH_BOTH)) { 
-
-
-// $alos=$oba->viewallocationstatus($order_id);
-//  $noofrecords=$alos->rowCount();
-
-// $rowalos=$alos->fetch(PDO::FETCH_BOTH);
- $payment_id=$row['payment_id'];
-  $rs=$obp->viewPaymentBystatus("Sent",$payment_id);    //active users
-  $noau=$rs->rowCount();  
-
-$deliverycharge=$row['delivery_charges'];
-$totalwithdeliverycharge=$row['total_amount'];
-
-$discount=$row['discount'];
-
-$totalfull=$totalwithdeliverycharge-$deliverycharge+$discount;
-            ?>
-
-            <tr    <?php if($row['payment_status']=="Pending") {?>
-
-            class="alert-danger"
-
-
-<?php }?>>
-
-           <td style="height:45px"><?php echo $row['order_id']."/".$row['payment_id']; ?></td>
-             <td style="height:45px"><?php echo $row['payment_date']; ?></td>
-              <td style="height:45px"><?php echo $row['total_amount']; ?></td>
-              <td style="height:45px"><?php echo $row['payment_status']; ?></td>
-               <td style="height:45px"><?php echo $row['trasaction_id']; ?></td>
-<th style="height:40px">
-  <?php if( $noau==0) { ?>
-          <a href="../view/invoicepackage.php?payment_id=<?php echo $row ['payment_id']; ?>">
-                <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="View Invoice">Send Invoice</button>
-              </a>
-
-                              <a href="../view/paycash.php?payment_id=<?php echo $row ['payment_id']; ?>&order_id=<?php echo $row ['order_id']; ?>&totalfull=<?php echo $totalfull; ?>&deliverycharge=<?php echo $deliverycharge; ?>&discount=<?php echo $discount; ?>">
-
-                    <?php if($row['payment_status']=="Pending") { ?>
-                <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="View Invoice">Pay</button>
-              </a>
-
-              <?php }?>
-<?php }?>
-
-</th>
-
-
-          </tr>
-        <?php } ?>
-
-
-      </tbody>
-    </table>
-  </div>
-</div>
-</div>
-<!-- End PAge Content -->
-
-</div>
-
-
-<!-- footer -->
-</div>
 
 <?php include_once('../common/footer.php'); ?>
 

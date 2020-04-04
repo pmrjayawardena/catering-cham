@@ -22,30 +22,6 @@ switch ($action){
             $user_pwd=sha1('123');  //encrypt the default password using sha1 and asign to a variable
             $oblogin->addlogin($_POST['user_email'], $user_pwd, $user_id); //add the email and password to login table
 
-
-// if a user is added the email and the password will be sent to the perticular user email
-            $mail = new PHPMailer();
-            $mail->isSMTP();
-            $mail->Host = "smtp.gmail.com";
-            $mail->SMTPSecure = "ssl";
-            $mail->Port = 465;
-            $mail->SMTPAuth = true;
-            $mail->Username = 'southernlanka123@gmail.com';
-            $mail->Password = 'southernlanka1@';
-
-            $mail->setFrom('admin@southernlanka.com', 'Southern Lanka Catering');
-            $mail->addAddress($_POST['user_email'], $_POST['user_fname']);
-            $mail->Subject = 'Password for your account';
-            $mail->isHTML(true);
-            $mail->Body = "Congratulations your account is successfully created <br><br>"
-
-            ."Email of your new account is - {$_POST["user_email"]}<br><br>"
-            ."your password is - 123 <br><br>";
-
-
-
-            if ($mail->send()) //if the email is sent
-
              if($_FILES['user_image']['name']!=""){    //if image is not empty
                 $user_image=$_FILES['user_image']['name'];   //name off the image
                 $user_tmp=$_FILES['user_image']['tmp_name'];  //temp location
@@ -62,10 +38,6 @@ switch ($action){
 
 
            break;
-
-
-
-
 
            case "update": //update a perticular user
            $arr=$_POST;   //get the details of the user from the form
@@ -123,21 +95,21 @@ switch ($action){
       $r=$obu->updateUserStatus($user_id,$user_status); //update the user status
 
       $last_visited_url=$_SERVER['HTTP_REFERER'];
-$arrurl=explode("/",$last_visited_url); //by using slash we seperate the url by "/" value
-$count=count($arrurl); //get count
-$url=$arrurl[$count-1]; // get page name
+        $arrurl=explode("/",$last_visited_url); //by using slash we seperate the url by "/" value
+        $count=count($arrurl); //get count
+        $url=$arrurl[$count-1]; // get page name
 
-$uri=explode("?",$url);
+        $uri=explode("?",$url);
 
-if($uri[0]=="searchuser.php"){
-  $search=$_REQUEST['search'];
-  $page=$_REQUEST['page'];
+        if($uri[0]=="searchuser.php"){
+          $search=$_REQUEST['search'];
+          $page=$_REQUEST['page'];
 
-}else{
+        }else{
 
-  header("Location:$last_visited_url");
+          header("Location:$last_visited_url");
 
-}
+        }
 //header("Location:$last_visited_url");
 break;
 

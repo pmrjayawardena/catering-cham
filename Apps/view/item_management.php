@@ -184,13 +184,6 @@ $item_id=$_REQUEST['item_id'];
              while ($row = $result->fetch(PDO::FETCH_BOTH)) {
 
 
-              $arr=array("feedback","order_item","item_package");
-              $item_id=$row['item_id'];
-              $count=0;
-              foreach ($arr as $v) {
-               $count+=checkDelete($v,"item_id",$item_id);
-               
-             }
 if($row['item_image']==""){
               $cimage="../images/foodwow.png";
             }else{

@@ -7,11 +7,6 @@ include '../common/dbconnection.php';
 include '../model/usermodel.php';
 include '../common/functions.php';
 
-$countm=checkModuleRole($m_id, $role_id);
- if($countm==0){ //to check user previlages
-   $msg=base64_encode("You dont have permission to access to this Module");
-   header("Location:../view/login.php?msg=$msg");
- }
 
 $obuser=new user();
  $resultn=$obuser->viewAllUser();

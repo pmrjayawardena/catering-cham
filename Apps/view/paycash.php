@@ -3,63 +3,22 @@ include '../common/sessionhandling.php';
 include '../common/dbconnection.php';
 include '../common/functions.php';
 include '../model/categorymodel.php';
-include '../model/offermodel.php';
+
 include '../model/ordermodel.php';
-$obo=new offer();
+
 $oborder=new order();
-$resultoffer1=$obo->getOfferStatusAndMoney();
-$rowoffer=$resultoffer1->fetch(PDO::FETCH_BOTH);
-$dbstatusmoney=$rowoffer['offer_status'];
-
-
 
 $order_id = $_REQUEST['order_id'];
 $payment_id = $_REQUEST['payment_id'];
 $totalfull = $_REQUEST['totalfull'];
-$deliverycharge = $_REQUEST['deliverycharge'];
-// $total=$_REQUEST['total'];
-// $discount=$_REQUEST['discount'];
 
-
-
-
-
-function getDiscount($totalfull){
-
-  if($totalfull>=7000){
-
-    return .10;
-  }elseif ($totalfull>=5000) {
-    return .075;
-  }elseif ($totalfull>=1000) {
-    return .05;
-  }else{
-
-    return 0;
-  }
-}
-?>
-
-<?php 
-
-if($dbstatusmoney=="Active"){
-
-  $dis=getDiscount($totalfull);
-
-  $discount=$totalfull*$dis;
-}else{
-
-  $discount=0;
-}
-
-
-$totalpay=$totalfull-$discount+$deliverycharge;
-
-
+$totalpay=$totalfull-$discount;
 
 $resultcheckouttype=$oborder->getorderdetails($order_id);
 $rowcheckouttype=$resultcheckouttype->fetch(PDO::FETCH_BOTH);
 ?>
+
+
 
 <?php include_once('../common/header.php'); ?><html>
 <head>
@@ -186,14 +145,10 @@ if(isset($_GET['msg'])){
 
 
   <!-- user table -->
-  <form method="post" action="../controller/paymentcontroller.php?action=add&order_id=<?php echo $order_id;?>&payment_id=<?php echo $payment_id;?>&totalfull=<?php echo$totalfull;?>&total=<?php echo $total;?>&deliverycharge=<?php echo $deliverycharge;?>&discount=<?php echo $discount;?>" enctype="multipart/form-data"  name="RegForm" onsubmit="return GEEKFORGEEKS()">
+  <form method="post" action="../controller/paymentcontroller.php?action=add&order_id=<?php echo $order_id;?>&payment_id=<?php echo $payment_id;?>&totalfull=<?php echo$totalfull;?>&total=<?php echo $total;?>enctype="multipart/form-data"  name="RegForm" onsubmit="return GEEKFORGEEKS()">
 
     <div class="container-fluid">
       <div class="col-lg-4 col-md-offset-2">Order Fee : <input type="text" name="just" value="<?php echo $totalfull?>" class="form-control form-control-lg" readonly> <br>
-
-        <div>Discount : <input type="text" name="discount" value="<?php echo $discount;?>" class="form-control form-control-lg" readonly> <br>
-
-            <div>Delivery Fee : <input type="text" name="deliverycharge" value="<?php echo $deliverycharge;?>" class="form-control form-control-lg" readonly> <br>
                 <div>Payment for the order : <input type="text" name="total_amount" value="<?php echo $totalpay;?>" class="form-control form-control-lg" readonly> <br>
           <button type="submit" name="submit" class="btn btn-primary">Pay for the order</button></div>
         </div>

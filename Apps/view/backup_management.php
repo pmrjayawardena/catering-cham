@@ -9,12 +9,6 @@ include '../model/backupmodel.php';
 
 $role_id=$userinfo['role_id'];
 
-$countm=checkModuleRole($m_id, $role_id);
- if($countm==0){ //to check user previlages
-   $msg=base64_encode("You dont have permission to access to this Module");
-   header("Location:../view/login.php?msg=$msg");
- }
-
 
 
 $obbackup=new backup;

@@ -7,8 +7,7 @@ include '../model/packagemodel.php';
 include '../model/checkoutmodel.php';
 include '../model/paymentmodel.php';
 include '../common/sessionhandling.php';
-include '../model/offermodel.php';
-$obo=new offer();
+
 $obpayment=new payment();
 $oborder= new order();
 $obitem = new item();
@@ -182,48 +181,20 @@ $resultsum=$oborder->totalpriceofmanualorder($order_id); //get the price of the 
 $rowsum=$resultsum->fetch(PDO::FETCH_BOTH);
 $totalfull=$rowsum['S'];
 
-//check if the offer is active or not and calculate the discount 
-
-$resultoffer1=$obo->getOfferStatusAndMoney();
-$rowoffer=$resultoffer1->fetch(PDO::FETCH_BOTH);
-$dbstatusmoney=$rowoffer['offer_status'];
 
 
-if($dbstatusmoney=="Active"){
-if($totalfull>=7000){
 
-    $discount=$totalfull*0.10;
-}elseif($totalfull>=5000){
-
-   $discount=$totalfull*0.075;
-}elseif($totalfull>=1000){
-
-    $discount=$totalfull*0.05;
-
-}else{
-
-    $discount=0;
-}
-}else{
-
-$discount=0;  
-}
+ $totalwithdiscount=$totalfull;
 
 
-$totalwithdiscount=$totalfull-$discount;
 
-if($checkout_type=="Home"){ //if the checkout type is home redirect to homedlivery page 
-    header("Location:../view/homedelivery.php?msg=$msg&cus_id=$cus_id&order_id=$order_id");
-
-}else{
-
-    $payment_id=$obpayment->addPaymentmanual1($order_id,$totalwithdiscount,$discount); //if the checkout type is shop add the record in payment table with order id,discount and total amount
+     $payment_id=$obpayment->addPaymentmanual($order_id,$totalwithdiscount); //if the checkout type is shop add the record in payment table with order id,discount and total amount
 
     header("Location:../view/paycash.php?payment_id=$payment_id&order_id=$order_id&totalfull=$totalfull&discount=$discount");
 
     //redirection to paycash page
     unset($_SESSION['sid']);
-}
+// }
 
 
 

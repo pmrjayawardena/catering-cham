@@ -271,78 +271,7 @@ $cus_id=$_REQUEST['cus_id'];
 </div>
 
 
-<!-- new table -->
 
-<div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-
-       <h4 class="card-title" align="center">Reply To Inquiries</h4>
-
-       <?php
-       if(isset($_GET['msg'])){
-        $msg= base64_decode($_GET['msg']);
-        if($_GET['id']==1){
-          $style="alert-success";
-        }else{
-          $style="alert-danger";
-        }
-        echo "<span class='".$style."'>".$msg."</span>";
-      }
-      ?>
-      <div class="table-responsive m-t-40">
-        <table id="example231" class="table table-hover" cellspacing="0" width="100%"">
-          <thead class="table-secondary">
-            <tr>
-
-              <th style="height:40px">Name</th>
-              <th style="height:40px">Email</th>
-              <th style="height:40px">Subject</th>
-              <th style="height:40px">Messege</th>
-              <th style="height:40px">Action</th>
-            </tr>
-          </thead>
-          <tfoot class="table-active">
-            <tr>
-
-              <th style="height:40px">Name</th>
-              <th style="height:40px">Email</th>
-              <th style="height:40px">Event Type</th>
-              <th style="height:40px">Location</th>
-              <th style="height:40px">Action</th>
-
-            </tr>
-          </tfoot>
-          <tbody>
-            <?php while($row=$resultc->fetch(PDO::FETCH_BOTH)) { 
-
-             ?>
-
-             <tr>
-
-
-
-               <td style="height:45px"><?php echo $row['firstname']." ".$row['cus_lname']; ?></td>
-               <td style="height:45px"><?php echo $row['email']; ?></td>
-               <td style="height:45px"><?php echo $row['event_type']; ?></td>
-               <td style="height:45px"><?php echo $row['location']; ?></td>
-               <td style="height:45px">
-                 <a href="../view/sendreply.php?c_id=<?php echo $row ['c_id']; ?>">
-                  <button type="button" class="btn btn-info">Reply</button>
-                </a>
-
-              </td>
-
-            </tr>
-          <?php } ?>
-
-
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
 <!-- End PAge Content -->
 
 </div>

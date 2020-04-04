@@ -5,15 +5,7 @@ include '../common/dbconnection.php';
 include '../common/functions.php';
 include '../common/sessionhandling.php';
 include '../model/categorymodel.php';
-include '../model/allocationmodel.php';
 
-$role_id=$userinfo['role_id'];
-
-$countm=checkModuleRole($m_id, $role_id);
- if($countm==0){ //to check user previlages
-   $msg=base64_encode("You dont have permission to access to this Module");
-   header("Location:../view/login.php?msg=$msg");
- }
 
 ?>
 <?php include_once('../common/header.php'); ?><html>
@@ -149,26 +141,7 @@ $countm=checkModuleRole($m_id, $role_id);
           </div>
         <?php }?>
 
-<?php if($userinfo['role_id']!=2){ ?>
-  <a href="../view/deliveryreport.php">
-    <div class="col-md-3">
-      <div class="card p-30">
-        <div class="media">
-          <div class="media-left meida media-middle">
-            <img src="../images/deliveryicon.png" width="80px" height="70px">
-            
-         </div>
-         <div class="media-body media-text-right">
-          <h2>Delivery</h2>
-          <p class="m-b-0">Delivery</p>
-        </div>
 
-      </div>
-    </a>
-  </div>
-</div>
-
-<?php }?>
         <?php if($userinfo['role_id']!=2){ ?>
           <a href="../view/paymentanalysis.php">
             <div class="col-md-3">
@@ -188,27 +161,6 @@ $countm=checkModuleRole($m_id, $role_id);
           </div>
 
         <?php }?>
-
-        <?php if($userinfo['role_id']!=2){ ?>
-          <a href="../view/feedbackanalysis.php">
-           <div class="col-md-3">
-            <div class="card p-30">
-              <div class="media">
-                <div class="media-left meida media-middle">
-                <img src="../images/feedbackicon.png" width="70px" height="70px"> 
-               </div>
-               <div class="media-body media-text-right">
-                <h2>Feedback</h2>
-                <p class="m-b-0">Feedback</p>
-              </div>
-
-            </div>
-          </a>
-        </div>
-      </div>
-
-    <?php }?>
-
     <?php if($userinfo['role_id']==2){ ?>
       <a href="../view/trackingreport.php">
        <div class="col-md-3">
@@ -231,27 +183,6 @@ $countm=checkModuleRole($m_id, $role_id);
 <?php }?>
 
 
-
-
-        <?php if($userinfo['role_id']!=2){ ?>
-                      <a href="../view/popularityreport.php">
-              <div class="col-md-3">
-                <div class="card p-30">
-                  <div class="media">
-                    <div class="media-left meida media-middle">
-                    <img src="../images/stars.png" width="70px" height="40px">
-                   </div>
-                   <div class="media-body media-text-right">
-                    <h2>Popularity</h2>
-                    <p class="m-b-0">Popularity</p>
-                  </div>
-
-                </div>
-              </a>
-            </div>
-          </div>
-
-        <?php }?>
 </div>
 
 </div>

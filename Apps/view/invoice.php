@@ -153,84 +153,6 @@ function fetch_customer_data()
 }
 
 
-if(isset($_POST['action']))
-{
-
-	include('pdf.php');  //include pdf.php page
-	$file_name = md5(rand()) . '.pdf';   //set a file name
-	$html_code = '<link rel="stylesheet" href="../css/bootstrap.min.css">';
-	$html_code .= fetch_customer_data($connect);
-
-	$pdf = new Pdf();  //create an object using domPDF class
-	$pdf->load_html($html_code); //Load HTML code
-	$pdf->render(); //render to pdf
-	$file = $pdf->output();
-	file_put_contents($file_name, $file);
-
-     $pdf->setPaper('A4', 'landscape'); //set paper size and orientation 
-
-     //Render the HTML as PDF
-
-     $pdf->render();
-
-     //Get output of generated pdf in Browser
-
-     $pdf->stream("Southern Lanka", array("Attachment"=>0));
-     //1  = Download
-     //0 = Preview
-
-
-	include '../phpmailer/PHPMailerAutoload.php'; //include page PHPMailerAutoload.php
-	$output = '';
-
-	$mail = new PHPMailer(); //create an object using PHPMailer class
-
-	$mail->isSMTP();
-	$mail->Host = "smtp.gmail.com";
-	$mail->SMTPSecure = "ssl";
-	$mail->Port = 465;
-	$mail->SMTPAuth = true;
-	$mail->Username = 'southernlanka123@gmail.com';  //email used to send emails
-	$mail->Password = 'southernlanka1@';             //password of the email address
-
-	$mail->setFrom('southernlanka123@gmail.com', 'Southern Lanka Catering'); //senders email
-	$mail->addAddress($cus_email,'southern lanka catering'); //send to the relevent customers
-	$mail->WordWrap = 50;							//Sets word wrapping on the body of the message to a given number of characters
-	$mail->IsHTML(true);							//Sets message type to HTML				
-	$mail->AddAttachment($file_name);               //set an attchment to email
-	$mail->Subject = 'Invoice For Your trasaction';
-	$mail->Body = "Dear <b> Customer </b> <br> <br>"
-
-
-	.'We’ll let you know when it’s on the way. In the meantime, we have more things you’ll love at unbeatable prices!<br>
-
-	&nbsp;<a href="http://localhost/my/website">Click Here To check our website </a>
-
-
-	<br>'
-
-	."<b>Southern Lanka Catering Service</b> <br>"
-	."<b>No 453/A </b> <br>"
-	."<b>Jalthara</b> <br>"
-	."<b>Ranala</b> <br>"
-	."<br>"
-	."<b>Fax : 01145789356</b> <br>"
-	."<b>Hot Line : 0770503433/0719140068</b> <br>"
-
-	;
-
-
-
-
-	if ($mail->send())
-
-		$invoice_status='Sent';
-	$result=$obp->updateInvoiceStatus($invoice_status,$payment_id);
-
-	header("Location:../view/payment_management.php?msg=11");
-
-	unlink($file_name);
-}
 
 
 ?>
@@ -265,8 +187,7 @@ if(isset($_POST['action']))
 		<h3 align="center">Send Transaction Invoice To Customer</h3>
 		<br />
 		<form method="post">
-			<input type="submit" name="action" class="btn btn-danger" value="Send Invoice" /><?php echo $message; ?>
-
+			
 			<button type="button" class="btn btn-primary" onclick="javascript:printDiv('section-to-print')">Print</button>
 		</form>
 

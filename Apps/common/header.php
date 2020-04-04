@@ -130,39 +130,7 @@ $noofnew=$resultneworders->rowCount();
                         <?php }?>
 
                         <!-- User profile and search -->
-                        <ul class="navbar-nav my-lg-0">
-                            <!-- Messages -->
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-muted  " href="#" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-envelope"></i>&nbsp;<?php echo $norn; ?>
-                                <div class='notification-num'> <span class="heartbit"></span> <span class="point"></span> </div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right mailbox animated zoomIn" aria-labelledby="2">
-                                <ul>
-                                    <li>
-                                        <div class="drop-title">You have <?php echo $norn; ?> new messages</div>
-                                    </li>
 
-                                    <li>
-
-                                       <div class="message-center">
-                                        <!-- Message -->
-
-                                        <?php while($rown=$resultnn->fetch(PDO::FETCH_BOTH)){ ?>
-
-                                            <a href="../view/viewnotification.php?notification_id=<?php echo $rown['notification_id']; ?>">
-                                                <div class="user-img"> <img src="../images/newmessage.png" alt="user" class="img-circle"> <span class="profile-status online pull-right"></span> </div>
-                                                <div class="mail-contnet">
-                                                    <h5><?php echo $rown['notification_category']; ?></h5> 
-                                                    <h6>Notification ID <?php echo $rown['notification_id']; ?></h6>
-                                                    <span class="mail-desc"><?php echo $rown['notification_comment']; ?></span> <span class="time"><?php echo $rown['notification_date']; ?></span>
-                                                </div>
-                                            </a>
-                                        <?php } ?>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link text-center" href="../view/notification_management.php"> <strong>See all Notifications</strong> <i class="fa fa-angle-right"></i> </a>
-                                    </li>
-                                </ul>
                             </div>
                         </li>
 

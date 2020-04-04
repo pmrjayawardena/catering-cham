@@ -33,7 +33,7 @@ $cus_id=$_REQUEST['cus_id'];
 
           <select name="select" class="form-control-lg" >
             <option value="Shop" id="Shop">Shop</option>
-            <option value="Home" id="Home">Home</option>
+
 
           </select>
         </div>

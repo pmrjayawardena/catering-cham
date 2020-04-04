@@ -1,4 +1,4 @@
-<footer class="footer"><h5 align="center">Southern Lanka Catering Service</h5></footer>
+<footer class="footer"><h5 align="center">School Catering Service</h5></footer>
             <!-- End footer -->
         </div>
         <!-- End Page wrapper  -->

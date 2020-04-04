@@ -3,50 +3,42 @@ $m_id=5;
 include '../common/dbconnection.php';
 include '../common/functions.php';
 include '../model/ordermodel.php';
-include '../model/allocationmodel.php';
 include '../common/sessionhandling.php';
 include '../model/packagemodel.php';
 
 include '../model/paymentmodel.php';
 $role_id=$userinfo['role_id'];
 
-$countm=checkModuleRole($m_id, $role_id);
- if($countm==0){ //to check user previlages
-   $msg=base64_encode("You dont have permission to access to this Module");
-   header("Location:../view/login.php?msg=$msg");
- }
+// $countm=checkModuleRole($m_id, $role_id);
+//  if($countm==0){ //to check user previlages
+//    $msg=base64_encode("You dont have permission to access to this Module");
+//    header("Location:../view/login.php?msg=$msg");
+//  }
 
  
  $oborder=new order;
- $oba=new allocate();
  $obpackage=new package();
  $obpayment=new payment();
  $resulto=$oborder->displayAllOrder();
  $resultprocessing=$oborder->displayProcessingOrders();
 
 
- $noconfirmedorder=$resulto->rowCount(); 
- $noorderprocessing= $resultprocessing->rowCount();
+//  $noconfirmedorder=$resulto->rowCount(); 
+//  $noorderprocessing= $resultprocessing->rowCount();
 
 
- $resultdispatched=$oborder->dispatchedOrders();
- $noofdispatched= $resultdispatched->rowCount();
+//  $resultdispatched=$oborder->dispatchedOrders();
+//  $noofdispatched= $resultdispatched->rowCount();
 
- $resultpending=$oborder->pendingorders();
- $noofpendingorders=$resultpending->rowCount();
+//  $resultpending=$oborder->pendingorders();
+//  $noofpendingorders=$resultpending->rowCount();
 
-  $rpp=$oborder->viewOrderBystatus("Full Payment");    //active users
-  $nopo=$rpp->rowCount();  
+//   $rpp=$oborder->viewOrderBystatus("Full Payment");    //active users
+//   $nopo=$rpp->rowCount();  
 
-  $rnpp=$oborder->viewOrderBystatus("Pending Payment");   //parsing the parameter Deactive to get number of deactive users
-  $nonpp=$rnpp->rowCount();
+//   $rnpp=$oborder->viewOrderBystatus("Pending Payment");   //parsing the parameter Deactive to get number of deactive users
+//   $nonpp=$rnpp->rowCount();
 
-
-
-  $alos1=$oba->viewallocationpending("Pending");
-  $noofrecords1=$alos1->rowCount();
-
-  $roW=$alos1->fetch(PDO::FETCH_BOTH);
 
   ?>
   <?php include_once('../common/header.php'); ?><html>
@@ -164,68 +156,6 @@ $countm=checkModuleRole($m_id, $role_id);
   
 
 
-  <div class="row">
-    <div class="col-md-3">
-      <div class="card p-30">
-        <div class="media">
-          <div class="media-left meida media-middle">
-            <span><i class="fa fa-shopping-cart f-s-40 color-danger"></i></span>
-          </div>
-          <div class="media-body media-text-right">
-            <h2><?php echo $noconfirmedorder+ $noofpendingorders ?></h2>
-            <p class="m-b-0">Total Orders</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="col-md-3">
-      <div class="card p-30">
-        <a href="../view/payment_management.php">
-          <div class="media">
-            <div class="media-left meida media-middle">
-              <span><i class="fa fa-shopping-basket f-s-40 color-dark"></i></span>
-            </div>
-            <div class="media-body media-text-right">
-              <h2><?php echo $noofpendingorders ?></h2>
-              <p class="m-b-0">(Payment is Pending)</p>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="card p-30">
-        <div class="media">
-          <div class="media-left meida media-middle">
-            <span><i class="fa fa-shopping-bag f-s-40 color-dark"></i></span>
-          </div>
-          <div class="media-body media-text-right">
-            <h2><?php echo  $noorderprocessing ?></h2>
-            <p class="m-b-0">Processing Orders</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="col-md-3">
-      <div class="card p-30">
-        <div class="media">
-          <div class="media-left meida media-middle">
-            <span><i class="fa fa-archive f-s-40 color-dark"></i></span>
-          </div>
-          <div class="media-body media-text-right">
-            <h2><?php echo $noofdispatched; ?></h2>
-            <p class="m-b-0">Dispatched orders</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
 
   </div>
   <script>
@@ -256,194 +186,14 @@ $countm=checkModuleRole($m_id, $role_id);
 <!-- user table -->
 
 
-<div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
 
-       <div class="alert alert-info"><h4 class="card-title" align="center">Processing Orders</h4></div>
-       <a href="../view/addorder.php" >
-        <button type="button" class="btn btn-info">
-          <i class="fa fa-shopping-cart"></i>
-          Add Item Order
-        </button>
-      </a>
-      <a href="../view/addpackageorder.php" >
-        <button type="button" class="btn btn-info">
-          <i class="fa fa-shopping-cart"></i>
-          Add Package Order
-        </button>
-      </a>
-      <div style="text-align: center">
-        <?php
-        if(isset($_GET['msg'])){
-          $msg= base64_decode($_GET['msg']);
-          if($_GET['id']==1){
-            $style="alert-success";
-          }else{
-            $style="alert-danger";
-          }
-          echo "<span class='".$style."'>".$msg."</span>";
-        }
-        ?>
-
-      </div>
-      <div class="table-responsive m-t-40">
-        <table id="example231" class="table table-hover" cellspacing="0" width="100%"">
-          <thead class="table-active">
-            <tr>
-              <th style="height:40px">Order ID &nbsp;</th>
-              <th style="height:40px">Order Date</th>
-              <th style="height:40px">Total Order Items</th>
-              <th style="height:40px">Customer Name</th>
-              <th style="height:40px">Customer Contact Number</th>
-               <th style="height:40px">checkout type</th>
-              <th style="height:40px">Payment Status</th>
-              <th style="height:40px">Action</th>
-            </tr>
-          </thead>
-          <tfoot class="table-active">
-            <tr>
-              <th style="height:40px">Order ID &nbsp;</th>
-              <th style="height:40px">Order Date</th>
-              <th style="height:40px">Total Order Items</th>
-              <th style="height:40px">Customer Name</th>
-              <th style="height:40px">Customer Contact Number</th>
-              <th style="height:40px">checkout type</th>
-              <th style="height:40px">Payment Status</th>
-              <th style="height:40px">Action</th>
-
-            </tr>
-          </tfoot>
-          <tbody>
-            <?php while($row= $resultprocessing->fetch(PDO::FETCH_BOTH)) { 
-             $arr=array("payment");
-             $order_id=$row['order_id'];
-             $count=0;
-             foreach ($arr as $v) {
-               $count+=checkOrder($v,"order_id",$order_id);
-
-             }
-
-
-
-             $order_id=$row['order_id'];
-             $alos=$oba->viewallocationstatus($order_id);
-             $noofrecords=$alos->rowCount();
-             $rowalos=$alos->fetch(PDO::FETCH_BOTH);
-
-             $resultdate=$oborder->getDeliverydate($order_id);
-             $rowdate=$resultdate->fetch(PDO::FETCH_BOTH);
-
-             $delivery_date=$rowdate['delivery_date'];
-
-
-// get payment details
-
-
-             $resultpayment=$obpayment->selectpayment($order_id);
-             $rowpayment=$resultpayment->fetch(PDO::FETCH_BOTH);
-
-             if($rowalos['note']== "Allocated"){
-              $status=1;
-              $sname="Allocated";
-              $style="danger";
-            }  else {
-              $status=0;
-              $sname="Allocate";
-              $style="success";
-            }
-
-
-               // get the total number of items
-
-            $resultpack = $obpackage->viewAllPackageitems2($order_id);
-            $rowpack=$resultpack->fetchall();
-
-
-            $package_id=$rowpack[0];
-
-            if($package_id==""){
-              $resultnoitems=$oborder->viewAllOrderItems($order_id);
-              $noofitems=$resultnoitems->rowCount();
-            }else{
-              $resultnopackage=$obpackage->viewAllPackageitems2($order_id);
-              $noofitems=$resultnopackage->rowCount();
-            }
-
-              // end of getting total number of items
-
-            ?>
-
-            <tr>
-
-             <td style="height:45px"><?php echo $row['order_id']; ?></td>
-             <td style="height:45px"><?php echo $row['order_date']; ?></td>
-             <td style="height:45px"><?php echo $noofitems;?></td>
-             <td style="height:45px"><?php echo $row['cus_fname']." ".$row['cus_lname'] ?></td>
-             <td style="height:45px"><?php echo $row['cus_tel']; ?></td>
- <td style="height:45px"><?php echo $row['checkout_type']; ?></td>
-             <td style="height:45px">
-
-              <?php if($rowpayment['payment_status']=="Pending" && $row['checkout_type']=="Home"){ ?>
-
-
-                <span class="label label-info"><?php echo "Cash On Delivery"; ?></span> 
-
-              <?php }elseif($rowpayment['payment_status']=="Pending"  && $row['checkout_type']=="Shop"){?>
-
-                <span class="label label-warning"><?php echo "Pending" ?></span>
-
-              <?php }elseif($rowpayment['payment_status']=="Paid" && $row['checkout_type']=="Shop" ){?>
-                <span class="label label-success"><?php echo "Paid" ?></span>
-              <?php }elseif($rowpayment['payment_status']=="Paid" && $row['checkout_type']=="Home" ){?>
-                <span class="label label-success"><?php echo "Paid" ?></span>
-              <?php }?>
-            </td>
-            <td>
-
-              <a href="../view/vieworder.php?order_id=<?php echo $row ['order_id']; ?>">
-                <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Order Details">View</button>
-              </a>
-
-              <?php if($count==0){ ?>
-               <a href="../controller/ordercontroller.php?order_id=<?php echo $row ['order_id'];?>&action=Delete">
-                <button type="button" class="btn btn-danger"  onclick="return confirmation('Delete','An Order')">
-                  Cancel Order
-                </button>
-              </a>
-            <?php } ?>
-
-
-            <?php if($noofrecords=="" && $row['checkout_type']!=="Shop"){ ?>
-              <a href="../controller/allocatecontroller.php?action=add&id=<?php echo $order_id;?>&date=<?php echo $delivery_date; ?>"><button type="button" class="btn btn-<?php echo $style; ?>"><?php  echo $sname; ?></button></a>
-
-            <?php }?>
-
-
-            <?php if($row['dispatch_status']!="Dispatched"){ ?>
-              <a href="../controller/ordercontroller.php?action=dispatched&order_id=<?php echo $order_id;?>"><button type="button" class="btn btn-primary">Dispatched</button></a>
-
-            <?php }?>
-          </td>
-
-
-
-        </tr>
-      <?php } ?>
-
-
-    </tbody>
-  </table>
-</div>
-</div>
-</div>
 
 <!-- second table -->
 <div class="row">
   <div class="col-12">
     <div class="card">
       <div class="card-body">
+        <a href="./addorder.php" class="btn btn-success">Add Item Order</a><br><br><br>
        <div class="alert alert-info"><h4 class="card-title" align="center">All Orders</h4></div>
 
 
@@ -468,11 +218,8 @@ $countm=checkModuleRole($m_id, $role_id);
             <tr>
               <th style="height:40px">Order ID &nbsp;</th>
               <th style="height:40px">Order Date</th>
-              <th style="height:40px">Dispatch Status</th>
               <th style="height:40px">Customer Name</th>
               <th style="height:40px">Customer Contact Number</th>
-
-              <th style="height:40px">Driver Allocation</th>
               <th style="height:40px">Action</th>
             </tr>
           </thead>
@@ -480,11 +227,8 @@ $countm=checkModuleRole($m_id, $role_id);
             <tr>
               <th style="height:40px">Order ID &nbsp;</th>
               <th style="height:40px">Order Date</th>
-              <th style="height:40px">Dispatch Status</th>
               <th style="height:40px">Customer Name</th>
               <th style="height:40px">Customer Contact Number</th>
-
-              <th style="height:40px">Driver Allocation</th>
               <th style="height:40px">Action</th>
 
             </tr>
@@ -502,42 +246,8 @@ $countm=checkModuleRole($m_id, $role_id);
 
 
              $order_id=$row['order_id'];
-             $alos=$oba->viewallocationstatus($order_id);
-             $noofrecords=$alos->rowCount();
-             $rowalos=$alos->fetch(PDO::FETCH_BOTH);
+          
 
-             $resultdate=$oborder->getDeliverydate($order_id);
-             $rowdate=$resultdate->fetch(PDO::FETCH_BOTH);
-
-             $delivery_date=$rowdate['delivery_date'];
-
-
-             if($rowalos['note']== "Allocated"){
-              $status=1;
-              $sname="Allocated";
-              $style="danger";
-            }  else {
-              $status=0;
-              $sname="Allocate";
-              $style="success";
-            }
-
-
-               // get the total number of items
-
-            $resultpack = $obpackage->viewAllPackageitems2($order_id);
-            $rowpack=$resultpack->fetchall();
-
-
-            $package_id=$rowpack[0];
-
-            if($package_id==""){
-              $resultnoitems=$oborder->viewAllOrderItems($order_id);
-              $noofitems=$resultnoitems->rowCount();
-            }else{
-              $resultnopackage=$obpackage->viewAllPackageitems2($order_id);
-              $noofitems=$resultnopackage->rowCount();
-            }
 
               // end of getting total number of items
 
@@ -547,42 +257,10 @@ $countm=checkModuleRole($m_id, $role_id);
 
              <td style="height:45px"><?php echo $row['order_id']; ?></td>
              <td style="height:45px"><?php echo $row['order_date']; ?></td>
-             <td style="height:45px">
 
-              <?php if($row['dispatch_status']==""){ ?>
-
-                <?php echo "Not Dispatched";?>
-
-              <?php }else{?>
-
-                <?php echo $row['dispatch_status'];?>
-              <?php }?>
-            </td>
             <td style="height:45px"><?php echo $row['cus_fname']." ".$row['cus_lname'] ?></td>
             <td style="height:45px"><?php echo $row['cus_tel']; ?></td>
 
-            <td style="height:45px">
-
-              <?php if($rowalos['note']=="" && $row['checkout_type']=="Shop"){ ?>
-
-
-                <span class="label label-info"><?php echo "Picked from store"; ?></span> 
-
-              <?php }elseif($rowalos['note']=="" && $row['checkout_type']=="Home"){?>
-
-                <span class="label label-warning"><?php echo "Pending" ?></span>
-
-              <?php }elseif($rowalos['note']=="Allocated"){?>
-
-               <span class="label label-success"> <?php echo $rowalos['note'] ?></span>
-
-             <?php }else{?>
-               <span class="label label-warning"> <?php echo $rowalos['note'] ?></span>
-
-             <?php }?>
-
-
-           </td>
            <td>
 
             <a href="../view/vieworder.php?order_id=<?php echo $row ['order_id']; ?>">

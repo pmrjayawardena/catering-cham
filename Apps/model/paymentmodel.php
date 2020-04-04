@@ -79,32 +79,21 @@ class payment{
         }
 
 
-        public function addPayment($pay,$deliverycharge,$order_id,$trasaction_id,$dis,$payment_type) {
+        // public function addPayment($pay,$deliverycharge,$order_id,$trasaction_id,$dis,$payment_type) {
+        //     global $con;
+            
+        //     $r=$con->prepare("INSERT INTO payment(payment_date,total_amount,delivery_charges,order_id,payment_status,trasaction_id,discount,payment_type) VALUES (now(),?,?,?,?,?,?,?)");
+        //     $r->execute(array($pay,$deliverycharge,$order_id,"Paid",$trasaction_id,$dis,$payment_type));
+        //     $payment_id=$con->lastinsertId();
+        //     return $payment_id;
+
+        // }
+
+
+        public function addPaymentmanual($order_id,$total) {
             global $con;
-            
-            $r=$con->prepare("INSERT INTO payment(payment_date,total_amount,delivery_charges,order_id,payment_status,trasaction_id,discount,payment_type) VALUES (now(),?,?,?,?,?,?,?)");
-            $r->execute(array($pay,$deliverycharge,$order_id,"Paid",$trasaction_id,$dis,$payment_type));
-            $payment_id=$con->lastinsertId();
-            return $payment_id;
-
-        }
-
-        public function addPaymentmanual($order_id2,$totalwithdiscount,$deliverycharge,$discount) {
-            global $con;
-            
-            $r=$con->prepare("INSERT INTO payment(order_id,total_amount,delivery_charges,payment_status,discount) VALUES (?,?,?,?,?)");
-            $r->execute(array($order_id2,$totalwithdiscount,$deliverycharge,"Pending",$discount));
-            $payment_id=$con->lastinsertId();
-            return $payment_id;
-            
-
-        }
-
-        public function addPaymentmanual1($order_id,$totalwithdiscount,$discount) {
-            global $con;
-            
-            $r=$con->prepare("INSERT INTO payment(order_id,total_amount,payment_status,discount) VALUES (?,?,?,?)");
-            $r->execute(array($order_id,$totalwithdiscount,"Pending",$discount));
+            $r=$con->prepare("INSERT INTO payment(order_id,total_amount,payment_status) VALUES ($order_id,?,?)");
+            $r->execute(array($total,"Pending"));
             $payment_id=$con->lastinsertId();
             return $payment_id;
 
