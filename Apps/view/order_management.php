@@ -4,8 +4,6 @@ include '../common/dbconnection.php';
 include '../common/functions.php';
 include '../model/ordermodel.php';
 include '../common/sessionhandling.php';
-include '../model/packagemodel.php';
-
 include '../model/paymentmodel.php';
 $role_id=$userinfo['role_id'];
 
@@ -17,7 +15,6 @@ $role_id=$userinfo['role_id'];
 
  
  $oborder=new order;
- $obpackage=new package();
  $obpayment=new payment();
  $resulto=$oborder->displayAllOrder();
  $resultprocessing=$oborder->displayProcessingOrders();

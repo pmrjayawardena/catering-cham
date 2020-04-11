@@ -1,13 +1,34 @@
-  <?php
-  include '../common/sessionhandling.php';
-  include '../common/dbconnection.php';
+<?php
+$m_id=5;
+include '../common/dbconnection.php';
+include '../common/functions.php';
+include '../model/ordermodel.php';
+include '../common/sessionhandling.php';
+include '../model/paymentmodel.php';
+$role_id=$userinfo['role_id'];
+
+
+
+ 
+ $oborder=new order;
+ $resulto=$oborder->displayAllOrder();
+ $resultprocessing=$oborder->displayProcessingOrders();
+
+
+
+
+
+  ?>
+
+<?php
+
   include '../model/usermodel.php';
   include '../model/logmodel.php';
-  include '../model/ordermodel.php';
-  include '../model/paymentmodel.php';
+
+
   $obp=new payment;
   $oblog= new log();
-  $oborder=new order;
+
   $obuser= new user();
 
   $results=$obp->getSum();
@@ -43,11 +64,10 @@
   $resulto=$oborder->displayAllOrderlatest();
   $result=$obuser->viewAllUserlimit();
   ?>
-
-  <html>
+  <?php include_once('../common/header.php'); ?><html>
   <head>
-
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css" />
+  
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css" />
     <link type="text/css" rel="stylesheet" href="../css/style.css" />
     <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
     
@@ -107,105 +127,13 @@
    <!-- Main CSS-->
    <link href="../css/theme.css" rel="stylesheet" media="all">
 
-   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-   <script>
-    google.charts.load('current', {'packages':['line', 'corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-
-        //var button = document.getElementById('change-chart');
-        var chartDiv = document.getElementById('chart_div');
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Date');
-        data.addColumn('number', "Number of Logins");
-        //data.addColumn('number', "Average Hours of Daylight");
-
-        data.addRows([
-         <?php for($i=6;$i>=0;$i--){ 
-           $date=date('Y-m-d', strtotime($cdate." - $i days")); 
-           
-           $r=$oblog->countlogFrequency($date);
-           $n=$r->rowCount();
-           ?>
-           ["<?php echo $date ?>",<?php echo $n; ?>],
-         <?php } ?>
-         ]);
-
-        var materialOptions = {
-          chart: {
-            title: 'Login Frequency for Current Week'
-          },
-          width: 800,
-          height: 400,
-          series: {
-            // Gives each series an axis name that matches the Y-axis below.
-            0: {axis: 'Temps'},
-            1: {axis: 'Daylight'}
-          },
-          axes: {
-            // Adds labels to each axis; they don't have to match the axis names.
-            y: {
-              Temps: {label: 'No of logins'},
-              Daylight: {label: 'Daylight'}
-            }
-          }
-        };
-
-        var classicOptions = {
-          title: 'Average Temperatures and Daylight in Iceland Throughout the Year',
-          width: 900,
-          height: 500,
-          // Gives each series an axis that matches the vAxes number below.
-          series: {
-            0: {targetAxisIndex: 0},
-            1: {targetAxisIndex: 1}
-          },
-          vAxes: {
-            // Adds titles to each axis.
-            0: {title: 'No of Logins'},
-            1: {title: 'Daylight'}
-          },
-          hAxis: {
-            ticks: [new Date(2014, 0), new Date(2014, 1), new Date(2014, 2), new Date(2014, 3),
-            new Date(2014, 4),  new Date(2014, 5), new Date(2014, 6), new Date(2014, 7),
-            new Date(2014, 8), new Date(2014, 9), new Date(2014, 10), new Date(2014, 11)
-            ]
-          },
-          vAxis: {
-            viewWindow: {
-              max: 30
-            }
-          }
-        };
-
-        function drawMaterialChart() {
-          var materialChart = new google.charts.Line(chartDiv);
-          materialChart.draw(data, materialOptions);
-          button.innerText = 'Change to Classic';
-          button.onclick = drawClassicChart;
-        }
-
-        function drawClassicChart() {
-          var classicChart = new google.visualization.LineChart(chartDiv);
-          classicChart.draw(data, classicOptions);
-          button.innerText = 'Change to Material';
-          button.onclick = drawMaterialChart;
-        }
-
-        drawMaterialChart();
-
-      }
-    </script>
-  </head>
-
-
-
+  <p align="center">Modules</p>
   <li>
    <?php include_once('../common/modules.php'); ?>
-   
+
  </li>
+</li>
+<li class="nav-label"></li> 
 
 </div>
 <!-- End Sidebar scroll-->
@@ -213,21 +141,24 @@
 <!-- End Left Sidebar  -->
 <!-- Page wrapper  -->
 <div class="page-wrapper">
-
-  <!-- Container fluid  -->
-  <div class="container-fluid">
-
-
-    <!-- Start Page Content -->
-    <div class="alert alert-secondary" role="alert" height="50px">
-      <h4 class="alert-heading">Wellcome!</h4>
-      <h3 class="text-dark"><?php echo $userinfo['user_fname']." ".$userinfo['user_lname']; ?>&nbsp;&nbsp;&nbsp;<i><img class="style1" src="<?php echo $iname; ?>" width="90px" height="50px"></i></h3>
-      <hr>
-      &nbsp;<?php echo $userinfo['role_name']; ?>
+  <!-- Bread crumb -->
+  <div class="row page-titles">
+    <div class="col-lg-12 align-self-center">
     </div>
+    <div class="col-lg-12 align-self-center">
+    <p>WELCOME TO CATERING SYSTEM</p>
+     <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="../view/dashboard.php">Home</a></li>
+      <li class="breadcrumb-item"><a href="../view/dashboard.php">Dashboard</a></li>
+    </ol>
+  </div>
 
-    <!-- Start of Number Of User Registrations -->
-    <div class="col-sm-6 col-lg-3">
+</div>
+<!-- End Bread crumb -->
+<!-- Container fluid  -->
+<div class="container-fluid">
+  <!-- Start Page Content -->
+  <div class="col-sm-6 col-lg-3">
       <div class="overview-item overview-item--c1">
         <div class="overview__inner">
           <div class="overview-box clearfix">
@@ -306,206 +237,82 @@
       </div>
     </div>
 
-    <!-- RECENT PURCHASES -->
-    <div class="panel">
-      <div class="panel-heading">
-        <h3 class="panel-title">Orders to be Dispatched</h3>
-        <div class="right">
-          <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i></button>
-          <button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
-        </div>
-      </div>
-      <div class="panel-body no-padding">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Order No.</th>
-              <th>Order Date</th>
-              <th>Order Status</th>
-              <th>Customer Name</th>
-              <th>Customer Tel</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            <?php while($row=$resulto->fetch(PDO::FETCH_BOTH)) { 
-
-              ?>
-              <tr>
-               
-               <td style="height:45px"><?php echo $row['order_id']; ?></td>
-               <td style="height:45px"><?php echo $row['order_date']; ?></td>
-               <td style="height:45px"><span class="label label-success">
-
-
-<?php if($row['dispatch_status']==""){ ?>
-                <?php echo "Processing" ?>
-                  
-<?php }?>
-
-                </span></td>
-               <td style="height:45px"><?php echo $row['cus_fname']." ".$row['cus_lname'] ?></td>
-               <td style="height:45px"><?php echo $row['cus_tel']; ?></td>
-
-               
-               
-             </tr>
-
-
-
-           <?php } ?>
-         </tbody>
-       </table>
-     </div>
-     <div class="panel-footer">
-      <div class="row">
-        <div class="col-md-6"><span class="panel-note"><i class="fa fa-clock-o" aria-hidden="true"></i>
-        Last Days</span></div>
-        <div class="col-md-6 text-right"><a href="../view/order_management.php" class="btn btn-primary">View All Orders</a></div>
-      </div>
-    </div>
   </div>
-  <!-- END RECENT PURCHASES -->
 
-  <!--  Login Frequency chart --> 
-  <div class="col-lg-12">
+<!-- user table -->
+
+
+
+
+<!-- second table -->
+<div class="row">
+  <div class="col-12">
     <div class="card">
       <div class="card-body">
-       
-        <div id="chart_div" align="center"> 
-        </div>
+
+
+
+
+       <div style="text-align: center">
+
+
       </div>
-    </div>
+      <div class="table-responsive m-t-40">
 
-    <div class="col-lg-12">
-      <div class="box box-danger">
-        <div class="box-header with-border">
-          <h3 class="box-title">Latest Users</h3>
-
-          <div class="box-tools pull-right">
-            <span class="label label-danger">4 New Users</span>
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-            </button>
-          </div>
-        </div>
-        <!-- /.box-header -->
-        <?php while($row=$result->fetch(PDO::FETCH_BOTH)) { 
-          if($row['user_image']==""){
-            $uimage="../images/user_icon.png";
-          }else{
-            $uimage="../images/user_images/".$row['user_image'];
-          }
-          if($row['user_status']== "Active"){
-            $status=1;
-            $sname="Deactivate";
-            $style="danger";
-          }  else {
-            $status=0;
-            $sname="Activate";
-            $style="success";
-          }
-
-          ?>
-          <div class="box-body no-padding">
-
-            <ul class="users-list clearfix">
+</div>
+</div>
+</div>
 
 
-              <li>
-                <a class="users-list-name" href="../view/viewuser.php?user_id=<?php echo $row['user_id'];?>">
-                  <img src="<?php echo $uimage;?>" height="6000px" width="120px" alt="User Image">
-                  <hr>
-                  <h5><?php echo $row['user_fname']." ".$row['user_lname']; ?></h5>
-                  <h6>Date of joined : <?php echo $row['user_doj'];?></h6>
-                </li>
-                </a
-              <?php } ?>
-            </ul>
+<!-- End PAge Content -->
 
+</div>
 
-          </div>
-          <!-- /.box-body --><br>
-          <div class="box-footer text-center">
-            <a href="../view/user_management.php" class="btn btn-primary btn-md btn-block">View All Users</a>
-          </div>
-          <!-- /.box-footer -->
-        </div>
-        <!--/.box -->
-      </div>
-      <!-- /.col -->
-    </div>
+<!-- footer -->
+</div>
 
-
-  </div>
+<?php include_once('../common/footer.php'); ?>
 
 
 
-  <!-- footer -->
-  <?php include_once('../common/footer.php'); ?>
+<script src="../js/lib/jquery/jquery.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="../js/lib/bootstrap/js/popper.min.js"></script>
 
 
+<!--Custom JavaScript -->
+<script src="../js/scripts.js"></script>
 
 
+<script src="../js/lib/datatables/datatables.min.js"></script>
+<script src="../js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+<script src="../js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+<script src="../js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+<script src="../js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+<script src="../js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+<script src="../js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+<script src="../js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+<script src="../js/lib/datatables/datatables-init.js"></script>
+<script src="../js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.colVis.min.js"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
 
-  <!-- Jquery JS-->
-  <script src="../vendor/jquery-3.2.1.min.js"></script>
+<!--Custom JavaScript -->
+<script src="../js/scripts.js"></script>
 
-  <!-- Vendor JS       -->
-  <script src="../vendor/slick/slick.min.js">
-  </script>
-  <script src="../vendor/wow/wow.min.js"></script>
-  <script src="../vendor/animsition/animsition.min.js"></script>
-  <script src="../vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-  </script>
-  <script src="../vendor/counter-up/jquery.waypoints.min.js"></script>
-  <script src="../vendor/counter-up/jquery.counterup.min.js">
-  </script>
-  <script src="../vendor/circle-progress/circle-progress.min.js"></script>
-  <script src="../vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-  <script src="../vendor/chartjs/Chart.bundle.min.js"></script>
-  <script src="../vendor/select2/select2.min.js">
-  </script>
+</script>
+<script type="text/javascript">
 
-  <!-- Main JS-->
-  <script src="../js/main (2).js"></script>
+  function confirmation (str) {
 
-  <script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
-  <!-- Bootstrap 3.3.5 -->
-  <script src="../bootstrap/js/bootstrap.min.js"></script>
-  <!-- iCheck -->
-  <script src="../plugins/iCheck/icheck.min.js"></script>
-  <script>
-    $(function () {
-      $('input').iCheck({
-        checkboxClass: 'icheckbox_square-blue',
-        radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-          });
-    });
-  </script>
+    var r=confirm("Do you want to" +str+ "Order ?");
 
+    if(!r){
 
-  <script src="../js/lib/calendar-2/pignose.init.js"></script>
-  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-  <!-- Bootstrap 3.3.7 -->
-  <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <!-- FastClick -->
-  <script src="../bower_components/fastclick/lib/fastclick.js"></script>
-  <!-- AdminLTE App -->
-  <script src="../dist/js/adminlte.min.js"></script>
-  <!-- Sparkline -->
-  <script src="../bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-  <!-- jvectormap  -->
-  <script src="../plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-  <script src="../plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-  <!-- SlimScroll -->
-  <script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-  <!-- ChartJS -->
-  <script src="../bower_components/chart.js/Chart.js"></script>
-  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="../dist/js/pages/dashboard2.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="../dist/js/demo.js"></script>
+      return false;
+    }
+  }
+
+</script> 

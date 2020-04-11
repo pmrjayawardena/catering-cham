@@ -1,30 +1,32 @@
 <?php
 
 
-class city{
+class city
+{
     
-    function displayCitiesPerDis($dis_id){
+    function displayCitiesPerDis($dis_id)
+    {
         
         global $con;
         
-        $r=$con->prepare("SELECT * FROM cities WHERE district_id=?");
+        $r = $con->prepare("SELECT * FROM cities WHERE district_id=?");
         
-        $r->execute(array($dis_id)); 
+        $r->execute(array(
+            $dis_id
+        ));
         
-        if($r->errorCode()!=0){
-            $errors = $r -> errorInfo();
+        if ($r->errorCode() != 0) {
+            $errors = $r->errorInfo();
             echo $errors[2];
             
         }
         
         return $r;
-                
-   
-   }
-
+        
+        
+    }
+    
 }
 
 
 ?>
-
-

@@ -206,9 +206,6 @@ $nor1=$result3->rowCount();
           <input type="image" src="../images/print.png"  width="50px" height="70px" onclick="javascript:printDiv('section-to-print')"/>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-
-          <a href="../view/paymentanalysisbydatespdf.php?from=<?php echo $f; ?>&to=<?php echo $t; ?>" target="blank">
-            <input type="image" src="../images/pdf.png"  width="50px" height="70px" />
           </a>
         </div>
       </div>

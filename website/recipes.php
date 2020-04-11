@@ -35,6 +35,7 @@ $resultc=$obcat->displayAllCategory();
 
     <!-- Theme Style -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/custom.css">
   </head>
   <body>
     
@@ -111,11 +112,10 @@ $resultc=$obcat->displayAllCategory();
         </div>
       </div>
 
-      <div class="container">
-        
-        <div class="row no-gutters">
 
-        <?php
+      <div class="items-wrapper">
+      
+      <?php
              while ($row = $result->fetch(PDO::FETCH_BOTH)) {
 
                 if($row['item_image']==""){
@@ -123,41 +123,20 @@ $resultc=$obcat->displayAllCategory();
             }else{
               $cimage="../Apps/images/item_images/".$row['item_image'];
             }
-              $y = 1;
+
             ?>
-          <div class="col-md-6">
-          <?php if($row['item_id'] %2 ==1){?>
-            <div class="sched d-block d-lg-flex">
-              <div class="bg-image order-2" style="background-image: url('<?php echo $cimage;?>');" data-aos="fade"></div>
-              <div class="text order-1">
+      <div class="item-card">
+          <div class="item-img"><img src="<?php echo $cimage;?>" alt=""></div>    
+          <div class="item-des">
+          
+          <h3><?php echo $row['item_name']; ?>   <span>Price : Rs <?php echo $row['item_price']; ?></h3>
 
-            
-                <h3><?php echo $row['item_name']; ?></h3>
-                <p><?php echo $row['item_des']; ?></p>
-                <p class="text-primary h3">Rs <?php echo $row['item_price']; ?></p>
-              </div>
-              
-            </div>
-
-          <?php }else{?>
-            <div class="sched d-block d-lg-flex">
-              <div class="bg-image" style="background-image: url('<?php echo $cimage;?>');" data-aos="fade"></div>
-              <div class="text">
-                <h3><?php echo $row['item_name']; ?></h3>
-                <p><?php echo $row['item_des']; ?></p>
-                <p class="text-primary h3">Rs <?php echo $row['item_price']; ?></p>
-                
-              </div>
-              
-            </div>
-
-          <?php }?>
+          <p><?php echo $row['item_des']; ?></p>
           </div>
-          <?php  $y++;}  ?>
-         
-        </div>
-        
+      </div>
 
+      <?php  }  ?>
+      
       </div>
     </section> <!-- .section -->
     

@@ -11,15 +11,12 @@ $user_id = $_REQUEST['user_id'];//To take the user id of the particular person
 $obu=new user();
 $resultuser = $obu->viewAUser($user_id);
 $rowuser=$resultuser->fetch(PDO::FETCH_BOTH);
-//echo $rowuser['user_fname'];
-
 include '../model/districtmodel.php';
 $dis_id=$rowuser['dis_id'];
 $obdis = new district();
 $resultdis = $obdis->displayDistrict($dis_id);
 $rowdis = $resultdis->fetch(PDO::FETCH_BOTH);
-//echo $rowdis['dis_name'];
-//echo $rowdis['pro_name'];
+
 ?>
 
 
@@ -103,11 +100,7 @@ $rowdis = $resultdis->fetch(PDO::FETCH_BOTH);
                              </header>
                              <div class="desc">
                               <b><h2><?php echo $rowuser['user_fname']." ".$rowuser['user_lname']; ?></h2></b>
-
-
                               <h4><?php echo $rowuser['role_name']; ?></h4>
-
-
                               <h5>User ID - <?php echo $rowuser['user_id']; ?></h5> 
                               <h4><span class="label label-primary"><?php echo $rowuser['user_status']?></span></h4>
                             </div>

@@ -177,38 +177,17 @@ $nor=$result2->rowCount();
                   <td>Order ID</td>
                   <td>Customer Name</td>
                   <td>Order Date</td>
-                  <td>Customer City</td>
-                  <td>Delivery Date</td>
                 </tr>
                 <?php while($rowres=$result2->fetch(PDO::FETCH_BOTH)){
 
                   $cus_id=$rowres['cus_id'];
                   $order_id=$rowres['order_id'];
-                  $resultcity=$obj->getCusCity($cus_id);
-                  $rowcity=$resultcity->fetch(PDO::FETCH_BOTH);
-
-                  $resultdate=$obj->getDeliveryDate($order_id);
-                  $rowdelivery=$resultdate->fetch(PDO::FETCH_BOTH);
-
                   ?>
-                  <tr>
-                    
+                  <tr> 
                     <td><?php echo $rowres['order_id']; ?> </td>
-                    
                     <td><?php echo $rowres['cus_fname']." ".$rowres['cus_lname']; ?> </td>
                     <td><?php echo $rowres['order_date']; ?> </td>
-                    <td><?php echo $rowcity['cus_city'] ?> </td>
-                    <td>
 
-
-                      <?php if($rowdelivery['delivery_date']==""){ ?>
-                       
-                        <?php echo "Picked from Store"; ?>
-                      <?php }else{ ?>
-                       <?php echo $rowdelivery['delivery_date'] ?> 
-                     <?php }?>
-
-                   </td>
                  </tr>
                <?php } ;?>
              </table>
@@ -221,8 +200,6 @@ $nor=$result2->rowCount();
 
         <input type="image" src="../images/print.png"  width="50px" height="70px" onclick="javascript:printDiv('section-to-print')"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="../view/orderanalysisbydatespdf.php?from=<?php echo $f; ?>&to=<?php echo $t; ?>" target="blank">
-          <input type="image" src="../images/pdf.png"  width="50px" height="70px" />
         </a>
       </div>
     </div>

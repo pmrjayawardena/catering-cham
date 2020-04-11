@@ -6,17 +6,17 @@
 
 session_start();
 error_reporting(E_WARNING || E_ALL);
- $userinfo=$_SESSION['userinfo'];
- if(count($userinfo)!=0){ //to check login or not
-    if($userinfo['user_image']==""){
-         $iname="../images/user_icon.png";
-    }else{
-        $iname="../images/user_images/".$userinfo['user_image'];
+$userinfo = $_SESSION['userinfo'];
+if (count($userinfo) != 0) { //to check login or not
+    if ($userinfo['user_image'] == "") {
+        $iname = "../images/user_icon.png";
+    } else {
+        $iname = "../images/user_images/" . $userinfo['user_image'];
     }
- }  else {
-     $msg = base64_encode("Please login!!!");
-     header("Location:../view/login.php?msg=$msg");
-     exit();
-     
- }    
- ?>
+} else {
+    $msg = base64_encode("Please login!!!");
+    header("Location:../view/login.php?msg=$msg");
+    exit();
+    
+}
+?>

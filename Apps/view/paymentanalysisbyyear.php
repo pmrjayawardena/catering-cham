@@ -139,7 +139,7 @@ $count12new=$result12->fetch(PDO::FETCH_BOTH);
 
  function drawChart() {
   var data = google.visualization.arrayToDataTable([
-    ['Year', 'PayPal', 'Cash'],
+    ['Year', '', 'Cash'],
     ['January', <?php echo $count1; ?>,<?php echo $count11; ?>],
     ['February', <?php echo $count2; ?>,<?php echo $count22; ?>],
     ['March',<?php echo $count3; ?>,<?php echo $count33; ?>],
@@ -156,8 +156,8 @@ $count12new=$result12->fetch(PDO::FETCH_BOTH);
 
   var options = {
     chart: {
-      title: 'No of Sales Paypal and Cash',
-      subtitle: 'PayPal, Cash',
+      title: 'No of Sales',
+      subtitle: ' Cash',
 
        width:400,
    height: 500,
@@ -345,7 +345,7 @@ function drawStuff() {
             <option value="short">short</option>
             <option value="long">long</option>
           </select>
-          <div id="number_format_chart" style="width: 300px; height: 500px;"></div>
+          <div id="number_format_chart" style="width: 300px; "></div>
           <!-- Start Page Content -->
 
           <div id="chart_div"></div>
